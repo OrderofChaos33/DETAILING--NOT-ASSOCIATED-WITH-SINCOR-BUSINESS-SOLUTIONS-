@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clinton Auto Detailing — Full Detail $250 | Book Online, No Deposit</title>
+<meta name="description" content="Clinton Auto Detailing at 715 Park Pl, Clinton, IA. Full Detail $250. Free pickup & delivery in Clinton/Fulton. Licensed & insured. 5 stars. Book in under a minute — no deposit, no account.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">CLINTON <span>AUTO DETAILING</span></div>
+  <a class="topbar-cta" href="sms:+18157188936">Text Court</a>
+</header>
+
+<section class="hero">
+  <p class="stars" aria-label="Rated 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>5 stars</span></p>
+  <h1>Your car, back to<br>better than bought.</h1>
+  <p class="hero-sub">Full interior &amp; exterior detail, pet-hair removal, odor cleanup, paint correction and ceramic coatings — done right, right here in Clinton.</p>
+  <div class="hero-price"><strong>$250</strong><span>Full Detail &middot; free pickup &amp; delivery in Clinton/Fulton</span></div>
+  <a class="btn btn-primary" href="#book">Book My Detail</a>
+  <p class="hero-trust">Licensed &amp; insured &middot; No deposit &middot; Pay at pickup, after you see the work</p>
+</section>
+
+<section class="strip">
+  <div><strong>Free Pickup &amp; Delivery</strong><span>Clinton &amp; Fulton</span></div>
+  <div><strong>Licensed &amp; Insured</strong><span>Your vehicle is covered</span></div>
+  <div><strong>715 Park Pl</strong><span>Clinton, IA</span></div>
+</section>
+
+<main id="book" class="booking">
+  <h2>Book in under a minute</h2>
+  <ol class="steps-indicator"><li data-ind="1" class="active">Service</li><li data-ind="2">Day &amp; Time</li><li data-ind="3">Your Details</li></ol>
+
+  <section class="step" data-step="1">
+    <div class="cards" id="serviceCards">
+      <button type="button" class="card selected" data-service="Standard Detail" data-price="250">
+        <strong>Full Detail</strong><span class="price">$250</span>
+        <small>Complete interior &amp; exterior. Pet hair &amp; odor cleanup included. Our most booked.</small>
+      </button>
+      <button type="button" class="card" data-service="Interior Detail" data-price="180">
+        <strong>Interior Detail</strong><span class="price">$180</span>
+        <small>Deep clean inside: shampoo, steam, leather, glass, every crack and crevice.</small>
+      </button>
+      <button type="button" class="card" data-service="Exterior Detail" data-price="150">
+        <strong>Exterior Detail</strong><span class="price">$150</span>
+        <small>Hand wash, clay, wax and trim — paint that feels as good as it looks.</small>
+      </button>
+      <button type="button" class="card" data-service="Paint Correction" data-price="650">
+        <strong>Paint Correction</strong><span class="price">from $650</span>
+        <small>Swirls and scratches machine-polished out before protection goes on.</small>
+      </button>
+      <button type="button" class="card" data-service="Ceramic Coating" data-price="1400">
+        <strong>Ceramic Coating</strong><span class="price">from $1,400</span>
+        <small>Years of gloss and protection. Ask about correction + ceramic packages.</small>
+      </button>
+      <button type="button" class="card" data-service="Seasonal Decontamination" data-price="225">
+        <strong>Seasonal Decontamination</strong><span class="price">$225</span>
+        <small>Salt, tar and winter grime stripped safely — the post-winter reset.</small>
+      </button>
+    </div>
+    <label class="field"><span>Vehicle size</span>
+      <select id="vehicleSize">
+        <option value="sedan">Sedan / Coupe</option>
+        <option value="small_suv">Small SUV</option>
+        <option value="full_suv">Full-size SUV</option>
+        <option value="truck">Truck</option>
+        <option value="3row">3-Row / Van</option>
+      </select>
+    </label>
+    <p class="quote" id="quoteLine">Estimate: $250 &middot; about 4 hrs &middot; No deposit</p>
+    <button type="button" class="btn btn-primary" data-next="2">Pick a Day &amp; Time</button>
+  </section>
+
+  <section class="step hidden" data-step="2">
+    <label class="field"><span>Day</span><input type="date" id="bookDate"></label>
+    <div class="slots" id="slotGrid"><p class="muted">Pick a day to see open bay times.</p></div>
+    <div class="row">
+      <button type="button" class="btn btn-ghost" data-next="1">Back</button>
+      <button type="button" class="btn btn-primary" data-next="3" id="toStep3" disabled>Continue</button>
+    </div>
+  </section>
+
+  <section class="step hidden" data-step="3">
+    <form id="detailsForm">
+      <label class="field"><span>Your name</span><input name="name" autocomplete="name" required></label>
+      <label class="field"><span>Mobile phone (for your confirmation text)</span><input name="phone" type="tel" autocomplete="tel" required></label>
+      <div class="row-fields">
+        <label class="field"><span>Vehicle year</span><input name="vehicle_year" type="number" min="1950" max="2030" placeholder="2022" required></label>
+        <label class="field"><span>Make</span><input name="vehicle_make" placeholder="Ford" required></label>
+        <label class="field"><span>Model</span><input name="vehicle_model" placeholder="Mustang" required></label>
+      </div>
+      <label class="check"><input type="checkbox" id="optPickup"> Free pickup &amp; delivery (Clinton/Fulton)</label>
+      <label class="check"><input type="checkbox" id="optPet"> Pet hair is a battle in there</label>
+      <label class="check"><input type="checkbox" id="optOdor"> Odor cleanup needed</label>
+      <p class="summary" id="summaryLine"></p>
+      <div class="row">
+        <button type="button" class="btn btn-ghost" data-next="2">Back</button>
+        <button type="submit" class="btn btn-primary" id="confirmBtn">Lock My Bay Slot</button>
+      </div>
+      <p class="fineprint">No deposit. No account. We text to confirm — reply STOP to opt out.</p>
+    </form>
+  </section>
+
+  <section class="step hidden" data-step="done">
+    <div class="done-box">
+      <p class="done-check">&#10003;</p>
+      <h3>You're booked.</h3>
+      <p id="doneText"></p>
+      <p class="muted">Need a change? Text Court at <a href="sms:+18157188936">815-718-8936</a>.</p>
+    </div>
+  </section>
+  <p class="error hidden" id="errorBox" role="alert"></p>
+</main>
+
+<section class="why">
+  <h2>Why Clinton books with Court</h2>
+  <ul>
+    <li><strong>We come to you.</strong> Free pickup and delivery in Clinton and Fulton — book it and carry on with your day.</li>
+    <li><strong>One price, up front.</strong> Full Detail is $250. Bigger vehicles and correction work are quoted before we start, never after.</li>
+    <li><strong>Pet hair &amp; odor specialists.</strong> The jobs other shops rush are the ones we are known for.</li>
+    <li><strong>Licensed &amp; insured.</strong> Your vehicle is in covered, careful hands at 715 Park Pl.</li>
+  </ul>
+</section>
+
+<footer>
+  <p><strong>Clinton Auto Detailing</strong> &middot; 715 Park Pl, Clinton, IA</p>
+  <p>Text Court: <a href="sms:+18157188936">815-718-8936</a> &middot; 5 stars &middot; Licensed &amp; insured</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
