@@ -7,6 +7,8 @@ Security posture from the owner's 2026-11-04 paste, kept intact:
 - Public API docs disabled in production; security headers on every response
 """
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -14,7 +16,22 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 
 from app.api.v1.api import api_router
-from app.core.config import SHOP_ADDRESS, SHOP_NAME
+from app.core import database as _database
+from app.core.config import (
+    CREATE_TABLES_ON_STARTUP,
+    EXTRA_ALLOWED_HOSTS,
+    SHOP_ADDRESS,
+    SHOP_NAME,
+)
+
+@asynccontextmanager
+async def lifespan(_app):
+    # Fresh deploys (empty database) must serve bookings immediately:
+    # create the model tables at boot when they do not exist yet.
+    if CREATE_TABLES_ON_STARTUP:
+        await _database.create_tables()
+    yield
+
 
 app = FastAPI(
     title="Clinton Auto Detailing Engine",
@@ -22,11 +39,20 @@ app = FastAPI(
     version="1.0.0",
     docs_url=None,
     redoc_url=None,
+    lifespan=lifespan,
 )
 
 app.add_middleware(
     TrustedHostMiddleware,
-    allowed_hosts=["clintondetail.com", "www.clintondetail.com", "localhost", "127.0.0.1"],
+    allowed_hosts=[
+        "clintondetail.com",
+        "www.clintondetail.com",
+        "localhost",
+        "127.0.0.1",
+        # Deploy-time additions only (e.g. the host platform's own domain),
+        # named explicitly via the EXTRA_ALLOWED_HOSTS env var.
+        *EXTRA_ALLOWED_HOSTS,
+    ],
 )
 
 origins = [

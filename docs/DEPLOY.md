@@ -11,9 +11,24 @@ Pushing this repo stores code. It does NOT deploy anything by itself.
 4. Put Caddy/Nginx in front with TLS for clintondetail.com → localhost:8000.
 
 ## Option B — Railway (or similar PaaS)
-1. New service from this repo, root `detailing_crm`, add a Postgres plugin.
-2. Env: DATABASE_URL (from the plugin, `postgresql+asyncpg://…`), TWILIO_*.
-3. Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+1. New project → Deploy from GitHub repo (this repo, branch `main`).
+   Build settings: Dockerfile path `detailing_crm/Dockerfile`, build
+   context = repo root (the Dockerfile copies the frontend in).
+2. Add a PostgreSQL service to the same project.
+3. Env on the app service:
+   - `DATABASE_URL` — the Postgres service's connection string with the
+     scheme changed to `postgresql+asyncpg://` (Railway hands out
+     `postgresql://`; asyncpg requires the explicit driver scheme).
+   - `EXTRA_ALLOWED_HOSTS` — the generated `*.up.railway.app` domain, so
+     the app answers on it before the custom domain is attached
+     (TrustedHost otherwise allows only clintondetail.com / localhost).
+   - `TWILIO_*` — when the Twilio checklist below is done.
+4. Tables are created automatically at startup (`create_tables` in the
+   app lifespan; idempotent). No manual migration step for first deploy.
+5. Verify: `GET https://<generated-domain>/health` → status online.
+6. Cutover: attach custom domains `clintondetail.com` + `www` in Railway,
+   then point DNS at the registrar to the Railway target. After DNS
+   propagates, EXTRA_ALLOWED_HOSTS can be removed.
 
 ## Twilio checklist (required for real SMS)
 - [ ] Account + shop number (local 815 or toll-free)
